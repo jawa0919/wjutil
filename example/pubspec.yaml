@@ -21,9 +21,16 @@ dependencies:
   saver_gallery: ">=5.0.0 <6.0.0"
   path: ">=1.0.0 <2.0.0"
   flutter_zxing: ">=2.0.0 <3.0.0"
+  signals: ">=6.0.0 <7.0.0"
+  flutter_smart_dialog: ">=5.0.0 <6.0.0"
+  flutter_inappwebview: ^6.2.0-beta.3
+  extended_image: ">=10.0.0 <11.0.0"
   wjutil:
     git:
       url: https://github.com/jawa0919/wjutil.git
+  go_router: ">=18.0.0 <19.0.0"
+  flutter_screenutil: ">=5.0.0 <6.0.0"
+  flutter_keyboard_visibility: ">=7.0.0 <8.0.0"
 
 dependency_overrides:
   wjutil:

@@ -1,0 +1,94 @@
+import 'dart:io';
+import 'dart:convert';
+
+import 'package:signals/signals.dart';
+
+import '../app_import.dart';
+import '../dto/login_user_resp.dart';
+import '../page/login/login_page.dart';
+
+/// 用户配置
+class UserStore {
+  static final UserStore to = _instance;
+  static final UserStore _instance = UserStore._internal();
+  factory UserStore() => _instance;
+
+  String token = '';
+  bool get hasToken => token.isNotEmpty;
+
+  final _profile = signal<LoginUserResp>(LoginUserResp());
+  late final profile = computed(() => _profile.value);
+  late final lastLoginUser = signal('');
+
+  UserStore._internal() {
+    debugPrint('user_store.dart~onInit: ');
+    token = Wjutil.pref.getString('token') ?? '';
+    final profileJson = Wjutil.pref.getString('profile') ?? '{}';
+    _profile.value = LoginUserResp.fromJson(jsonDecode(profileJson));
+    lastLoginUser.value = Wjutil.pref.getString('lastLoginUser') ?? '';
+    SettingView.onAction(SettingAction.logout, onLogout);
+  }
+
+  Future<void> saveToken(
+    String val, [
+    bool rememberUser = true,
+    bool updateProfile = false,
+  ]) async {
+    if (token != val) {
+      token = val;
+      if (rememberUser) await Wjutil.pref.setString('token', val);
+    }
+    if (updateProfile) {
+      var r = await apiRequest(() => UserApi.info(), LoginUserResp().toJson());
+      if (!r.success) return;
+      final resp = LoginUserResp.fromJson(r.data);
+      await saveProfile(resp);
+    }
+  }
+
+  Future<void> clearToken() async {
+    debugPrint('user_store.dart~clearToken: ');
+    await Wjutil.pref.remove('token');
+    token = '';
+  }
+
+  Future<void> saveProfile(LoginUserResp val) async {
+    await Wjutil.pref.setString('profile', jsonEncode(val));
+    _profile.value = val;
+    await saveLastLoginUser(val.email ?? '');
+  }
+
+  Future<void> clearProfile() async {
+    debugPrint('user_store.dart~clearProfile: ');
+    await Wjutil.pref.remove('profile');
+    _profile.value = const LoginUserResp();
+  }
+
+  Future<void> saveLastLoginUser(String val) async {
+    await Wjutil.pref.setString('lastLoginUser', val);
+    lastLoginUser.value = val;
+  }
+
+  void offAndToLoginPage(String tips) async {
+    AppRoutes.clearAllPush(LoginPage.routeName, {'tips': tips});
+  }
+
+  Future<void> onLogout({
+    bool removeProfile = true,
+    bool toLoginPage = true,
+    String tips = '',
+  }) async {
+    debugPrint(
+      'user_store.dart~onLogout: '
+      'removeProfile: $removeProfile toLoginPage: $toLoginPage tips: $tips',
+    );
+    await apiRequest(() => UserApi.logout(), {});
+    await clearToken();
+    if (removeProfile) await clearProfile();
+    if (toLoginPage) {
+      offAndToLoginPage(tips);
+      return;
+    }
+    exit(0);
+  }
+}

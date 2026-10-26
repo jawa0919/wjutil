@@ -1,4 +1,6 @@
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:signals/signals_flutter.dart';
 
 import 'app_import.dart';
 
@@ -7,68 +9,27 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
-      ).reset,
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
+    return ScreenUtilInit(
+      minTextAdapt: true,
+      splitScreenMode: true,
+      designSize: const Size(AppStatic.designWidth, AppStatic.designHeight),
+      builder: (context, child) => MaterialApp.router(
+        debugShowCheckedModeBanner: !Wjutil.isProduct,
+        title: Wjutil.packageName,
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
+        routerConfig: AppRoutes.routerConfig..observers?.add(ExDialog.observer),
+        builder: (context, child) {
+          child = ExDialog.builder(context, child);
+          return child;
+        },
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
+        theme: ThemeStore.to.lightTheme.value,
+        darkTheme: ThemeStore.to.darkTheme.value,
+        themeMode: ThemeStore.to.themeMode.watch(context),
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  final _calculator = Calculator();
-
-  void _incrementCounter() {
-    setState(() {
-      _counter = _calculator.addOne(_counter);
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-        actions: [
-          IconButton(
-            onPressed: () {
-              DebugPage.start(context);
-            },
-            icon: Icon(Icons.developer_board_rounded),
-          ),
-        ],
-        // systemOverlayStyle: SystemBar.style(
-        //   Theme.of(context).colorScheme.inversePrimary,
-        // ),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: .center,
-          children: [
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        localizationsDelegates: LanguageStore.to.localizationsDelegates,
+        supportedLocales: LanguageStore.to.supportedLocales,
+        locale: LanguageStore.to.locale.watch(context),
       ),
     );
   }

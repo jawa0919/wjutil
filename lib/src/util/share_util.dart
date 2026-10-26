@@ -1,6 +1,6 @@
 import 'dart:io' show Platform;
 
-import 'package:url_launcher/url_launcher_string.dart' show launchUrlString;
+import 'package:url_launcher/url_launcher_string.dart';
 import 'package:share_plus/share_plus.dart';
 
 class ShareUtil {
