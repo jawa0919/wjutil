@@ -1,9 +1,9 @@
 import 'package:flutter/services.dart';
+
 import 'package:material_ui/material_ui.dart';
-import 'package:wjutil/wjutil.dart';
 
 import 'app.dart';
-import 'app_static.dart';
+import 'app_import.dart';
 
 void main() async {
   debugPrint('main.dart~running: isProduct-${Wjutil.isProduct}');
@@ -18,6 +18,16 @@ void main() async {
 }
 
 Future<void> _initSystem() async {
+  ServerManager.init(
+    AppStatic.serverMap,
+    Wjutil.isProduct ? 'prod' : 'dev',
+    () {
+      AppApi().updateBaseUrl(ServerManager.optVal('mainApi'));
+    },
+  );
+  ThemeStore.init(AppStatic.colorScheme);
+  LanguageStore.init();
+  AppRoutes.setPageLanguage();
   if (Wjutil.isMobile) {
     await SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     List<DeviceOrientation> devOri = [DeviceOrientation.portraitUp];

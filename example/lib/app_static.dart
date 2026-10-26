@@ -1,3 +1,5 @@
+import 'package:material_ui/material_ui.dart';
+
 class AppStatic {
   AppStatic._();
   // 适合UI的尺寸
@@ -46,4 +48,40 @@ class AppStatic {
       'privacyUrl': '',
     },
   };
+
+  /// 主题色
+  static const primaryColor = Color(0xFF0ea5e9);
+
+  /// 真白颜色
+  static const trueBlack = Color(0xFF000000);
+
+  /// 真黑颜色
+  static const trueWhite = Color(0xFFFFFFFF);
+
+  /// 真透明颜色
+  static const trueTransparent = Color(0x00000000);
+
+  static final colorScheme = ColorScheme.fromSeed(seedColor: primaryColor)
+      .copyWith(
+        // primary: primary,
+        // onPrimary: onPrimary,
+        // secondary: secondary,
+        // onSecondary: onSecondary,
+        // error: error,
+        // onError: onError,
+        // surface: surface,
+        // onSurface: onSurface,
+
+        // surfaceContainerHighest: Color.fromRGBO(0, 0, 0, 0.9),
+        // surfaceContainerHigh: Color.fromRGBO(0, 0, 0, 0.9),
+        // surfaceContainer: Color(0xFFFFFFFF),
+        // surfaceContainerLow: Color(0xFFFFFFFF),
+        // surfaceContainerLowest: Color(0xFFFFFFFF),
+        // onSurfaceVariant: Color.fromRGBO(0, 0, 0, 0.6),
+
+        // outline: Color(0xFFC5C5C5),
+        // outlineVariant: Color(0xFFDCDCDC),
+        // shadow: Color(0xFFDCDCDC),
+        // scrim: Color.fromRGBO(0, 0, 0, 0.26),
+      );
 }
