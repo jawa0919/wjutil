@@ -1,7 +1,15 @@
 import 'package:flutter/foundation.dart' show PlatformDispatcher;
 
-import 'package:material_ui/material_ui.dart';
-import 'package:signals/signals_flutter.dart';
+import 'package:material_ui/material_ui.dart'
+    show
+        Locale,
+        debugPrint,
+        LocalizationsDelegate,
+        DefaultWidgetsLocalizations,
+        DefaultMaterialLocalizations;
+import 'package:cupertino_ui/cupertino_ui.dart'
+    show DefaultCupertinoLocalizations;
+import 'package:signals/signals.dart' show signal, computed;
 
 import '../ext/ex_dialog.dart' show ExDialogLanguage;
 import '../util/http_util.dart' show HttpUtilLanguage;
@@ -95,7 +103,8 @@ class LanguageStore {
 
   final List<LocalizationsDelegate> localizationsDelegates = [
     DefaultWidgetsLocalizations.delegate,
-    GlobalMaterialLocalizations.delegate,
+    DefaultMaterialLocalizations.delegate,
+    DefaultCupertinoLocalizations.delegate,
   ];
   final _languageIndex = signal(0);
   late final locale = computed(() => supportedLocales[_languageIndex.value]);
