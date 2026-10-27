@@ -1,9 +1,9 @@
 export 'src/debug/debug_page.dart';
 
-export 'src/ex/ex_dialog.dart';
-export 'src/ex/ex_object.dart';
-export 'src/ex/ex_theme.dart';
-export 'src/ex/ex_widget.dart';
+export 'src/ext/ex_dialog.dart';
+export 'src/ext/ex_object.dart';
+export 'src/ext/ex_theme.dart';
+export 'src/ext/ex_widget.dart';
 
 export 'src/store/language_store.dart';
 export 'src/store/server_manager.dart';

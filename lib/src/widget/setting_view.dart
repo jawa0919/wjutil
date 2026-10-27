@@ -2,7 +2,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:signals/signals_flutter.dart';
 
 import '../debug/debug_page.dart' show DebugPage;
-import '../ex/ex_widget.dart' show OnTapText;
+import '../ext/ex_widget.dart' show OnTapText;
 import '../store/language_store.dart' show LanguageString, LanguageStore;
 import '../store/theme_store.dart' show ThemeStore;
 import '../wjutil.dart' show Wjutil;

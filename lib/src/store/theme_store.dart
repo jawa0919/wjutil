@@ -3,7 +3,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:signals/signals.dart';
 
-import '../ex/ex_theme.dart' show ResetThemeData;
+import '../ext/ex_theme.dart' show ResetThemeData;
 import '../wjutil.dart' show Wjutil;
 
 class ThemeStore {

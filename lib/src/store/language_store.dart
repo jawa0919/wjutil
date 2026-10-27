@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart' show PlatformDispatcher;
 import 'package:material_ui/material_ui.dart';
 import 'package:signals/signals_flutter.dart';
 
-import '../ex/ex_dialog.dart' show ExDialogLanguage;
+import '../ext/ex_dialog.dart' show ExDialogLanguage;
 import '../util/http_util.dart' show HttpUtilLanguage;
 import '../widget/setting_view.dart' show SettingViewLanguage;
 import '../wjutil.dart' show Wjutil;
