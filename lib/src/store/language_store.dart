@@ -1,14 +1,10 @@
-import 'package:flutter/foundation.dart' show PlatformDispatcher;
-
-import 'package:material_ui/material_ui.dart'
-    show
-        Locale,
-        debugPrint,
-        LocalizationsDelegate,
-        DefaultWidgetsLocalizations,
-        DefaultMaterialLocalizations;
 import 'package:cupertino_ui/cupertino_ui.dart'
-    show DefaultCupertinoLocalizations;
+    show GlobalCupertinoLocalizations;
+import 'package:flutter/foundation.dart' show PlatformDispatcher;
+import 'package:flutter_localizations/flutter_localizations.dart'
+    show GlobalWidgetsLocalizations;
+import 'package:material_ui/material_ui.dart';
+
 import 'package:signals/signals.dart' show signal, computed;
 
 import '../ext/ex_dialog.dart' show ExDialogLanguage;
@@ -70,6 +66,7 @@ class LanguageStore {
     var baseLanguage = findBaseLanguage();
     var index = supportedLocales.indexWhere((e) => e == baseLanguage);
     if (index == -1) index = 0;
+    debugPrint('language_store.dart~_internal: $baseLanguage');
     _languageIndex.value = Wjutil.pref.getInt('_languageIndex') ?? index;
   }
 
@@ -102,9 +99,9 @@ class LanguageStore {
   }
 
   final List<LocalizationsDelegate> localizationsDelegates = [
-    DefaultWidgetsLocalizations.delegate,
-    DefaultMaterialLocalizations.delegate,
-    DefaultCupertinoLocalizations.delegate,
+    GlobalMaterialLocalizations.delegate,
+    GlobalCupertinoLocalizations.delegate,
+    GlobalWidgetsLocalizations.delegate,
   ];
   final _languageIndex = signal(0);
   late final locale = computed(() => supportedLocales[_languageIndex.value]);
